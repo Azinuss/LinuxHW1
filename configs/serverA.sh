@@ -4,7 +4,7 @@ IPADDR=192.168.1.10/24
 GATEWAY=192.168.1.1
 TOSUBNET=192.168.2.0/24
 #работает если псоле параметра поставить = 
-# команда проверка - serverA.sh --ip-address=192.168.1.20/24 --gateway=192.168.1.1 --to-subnet=192.168.2.0/24
+# команда проверка - serverA.sh --ip-adress=192.168.1.20/24 --gateway=192.168.1.1 --to-subnet=192.168.2.0/24
 PARSED_ARGUMENTS=$(getopt -o i::,g::,t:: -l ip-adress::,gateway::,to-subnet:: -n 'serverA.sh'  -- "$@")
 echo "$PARSED_ARGUMENTS"
 VALID_ARGUMENTS=$?
@@ -42,9 +42,18 @@ from flask import Flask
 
 app = Flask(__name__)
 
-@app.route("/")
+
+@app.route("/", methods=['GET'])
 def hello_world():
-    return "<p>Hello, World!</p>"
+    return "<p>[GET]Hello, World!</p>"
+
+@app.route("/", methods=['PUT'])
+def hello_world_put():
+    return "<p>[PUT]Hello, World!</p>"
+
+@app.route("/", methods=['POST'])
+def hello_world_post():
+    return "<p>[POST]Hello, World!</p>"
 
 app.run(host='0.0.0.0', port=5000)
 EOF
